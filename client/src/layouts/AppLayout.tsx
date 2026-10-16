@@ -1,8 +1,9 @@
 import { useState, useEffect, type FC, type ReactNode } from "react"
-import { Outlet } from "react-router-dom"
-import { Tooltip, Dropdown, type MenuProps } from "antd"
+import { Outlet, useNavigate } from "react-router-dom"
+import { Tooltip, Dropdown, message, type MenuProps } from "antd"
 import { useTheme } from "../hooks/useTheme"
 import { useConversations } from "../features/chat/useConversations"
+import { authService } from "../services/authService"
 import logoImg from "../assets/orvethiq_logo.png"
 
 export interface AppLayoutProps {
@@ -10,6 +11,7 @@ export interface AppLayoutProps {
 }
 
 export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
+  const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
   const {
     conversations,
@@ -72,6 +74,40 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
     {
       key: "export",
       label: "Export Conversations (JSON)",
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "signin",
+      label: "Sign In / Switch Account",
+      onClick: () => navigate("/signin"),
+    },
+    {
+      key: "signup",
+      label: "Create New Account",
+      onClick: () => navigate("/create-account"),
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "logout",
+      label: "Log Out",
+      danger: true,
+      icon: (
+        <span
+          className="material-symbols-outlined"
+          style={{ fontSize: 16, verticalAlign: "middle" }}
+        >
+          logout
+        </span>
+      ),
+      onClick: async () => {
+        await authService.signOut()
+        message.success("Logged out of workspace")
+        navigate("/signin")
+      },
     },
     {
       type: "divider",
