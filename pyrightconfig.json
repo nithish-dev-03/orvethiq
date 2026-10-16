@@ -1,11 +1,12 @@
 {
+  "include": ["server"],
   "venvPath": "server",
   "venv": ".venv",
-  "pythonPath": "server/.venv/bin/python",
+  "extraPaths": ["server/src", "server"],
   "executionEnvironments": [
     {
       "root": "server",
-      "extraPaths": ["server", "server/src"]
+      "extraPaths": ["src", "."]
     }
   ]
 }

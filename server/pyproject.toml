@@ -27,5 +27,10 @@ build-backend = "uv_build"
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-extraPaths = ["src"]
+extraPaths = ["src", "."]
+
+[tool.pyrefly]
+search-path = ["src", "."]
+python-interpreter-path = ".venv/bin/python"
+
 
